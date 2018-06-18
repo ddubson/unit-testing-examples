@@ -1,5 +1,7 @@
 buildscript {
     ext.kotlin_version = '1.2.50'
+    ext.junitVersion = "5.2.0"
+    ext.junitPlatformVersion = "1.2.0"
 
     repositories {
         mavenCentral()
@@ -7,9 +9,18 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
     }
 }
 
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.2.50"
+}
+
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+dependencies {
+    testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    runtime "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    runtime "org.junit.platform:junit-platform-console:$junitPlatformVersion"
 }
