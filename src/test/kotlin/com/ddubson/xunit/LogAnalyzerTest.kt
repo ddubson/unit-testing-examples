@@ -1,9 +1,10 @@
 package com.ddubson.xunit
 
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 internal class LogAnalyzerTest {
     private var logAnalyzer: LogAnalyzer? = null
@@ -14,30 +15,18 @@ internal class LogAnalyzerTest {
         logAnalyzer = LogAnalyzer()
     }
 
-    @Test
-    fun isValidLogFileName_givenABadFileName_returnsFalse() {
+    @DisplayName("isValidLogFileName")
+    @ParameterizedTest(name = "given a {1} filename {2}, it returns {0}")
+    @CsvSource(
+            "false, badfilename.txt, IgnoreCase",
+            "true, goodfilename.slf, Lowercase",
+            "true, goodfilename.SLF, Uppercase"
+    )
+    fun logFileNameTestCases(expectedResult: Boolean, filename: String, case: String) {
         // Act
-        val result = logAnalyzer!!.isValidLogFileName("fileWithBadExtension.foo")
+        val result = logAnalyzer!!.isValidLogFileName(filename)
 
         // Assert
-        assertFalse(result)
-    }
-
-    @Test
-    fun isValidLogFileName_givenAGoodExtensionLowercase_returnsTrue() {
-        // Act
-        val result = logAnalyzer!!.isValidLogFileName("fileWithGoodExtension.slf")
-
-        // Assert
-        assertTrue(result)
-    }
-
-    @Test
-    fun isValidLogFileName_givenAGoodExtensionUppercase_returnsTrue() {
-        // Act
-        val result = logAnalyzer!!.isValidLogFileName("fileWithGoodExtension.SLF")
-
-        // Assert
-        assertTrue(result)
+        assertEquals(expectedResult, result)
     }
 }
