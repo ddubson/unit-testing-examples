@@ -1,4 +1,4 @@
-package com.ddubson.xunit
+package com.ddubson.xunit.simple
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows

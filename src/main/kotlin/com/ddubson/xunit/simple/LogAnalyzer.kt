@@ -1,4 +1,4 @@
-package com.ddubson.xunit
+package com.ddubson.xunit.simple
 
 class LogAnalyzer {
     fun isValidLogFileName(fileName: String): Boolean {
